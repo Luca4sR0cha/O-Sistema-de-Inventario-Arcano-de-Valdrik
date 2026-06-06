@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário Arcano de Valdrik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Painel de dimensões da janela -->
+    <div id="painelDimensoes">
+        <span id="painel">Largura: 0px | Altura: 0px</span>
+    </div>
+
+    <header class="cabecalho">
+        <div class="cabecalho__ornamento cabecalho__ornamento--esq">⚔</div>
+        <div class="cabecalho__centro">
+            <p class="cabecalho__subtitulo">A Mochila Infinita de</p>
+            <h1 class="cabecalho__titulo">Valdrik Ironforge</h1>
+            <p class="cabecalho__lore">Guerreiro Lendário de Valirian</p>
+        </div>
+        <div class="cabecalho__ornamento cabecalho__ornamento--dir">🛡</div>
+    </header>
+
+    <main class="grade-principal">
+
+        <!-- ===== COLUNA ESQUERDA: Inventário ===== -->
+        <section class="secao-inventario">
+            <div class="secao-inventario__topo">
+                <h2 class="secao__titulo">🎒 Mochila Arcana</h2>
+                <div class="acoes-rapidas">
+                    <button id="btnDesconto" class="btn btn--magico">✨ Pechincha Arcana (−10%)</button>
+                    <button id="btnFiltroPocoes" class="btn btn--filtro">🧪 Visão Alquímica</button>
+                    <button id="btnMostrarTodos" class="btn btn--secundario" style="display:none">↩ Mostrar Todos</button>
+                </div>
+            </div>
+
+            <div id="exibirInventario" class="grade-itens"></div>
+        </section>
+
+        <!-- ===== COLUNA DIREITA: Painel lateral ===== -->
+        <aside class="painel-lateral">
+
+            <!-- Cofre de Ouro -->
+            <div class="cofre-ouro">
+                <div class="cofre-ouro__icone">💰</div>
+                <h3 class="cofre-ouro__titulo">Cofre de Ouro</h3>
+                <div id="resultadoOuro" class="cofre-ouro__valor">— moedas —</div>
+                <button id="btnContarOuro" class="btn btn--ouro">⚖ Contar Ouro</button>
+            </div>
+
+            <!-- Formulário Adicionar Item -->
+            <div class="formulario-container">
+                <h3 class="formulario-container__titulo">⚗ Adicionar Item à Mochila</h3>
+
+                <form id="formItem" class="formulario">
+
+                    <div class="campo">
+                        <label class="campo__label" for="nome">Nome do Item</label>
+                        <input class="campo__input" type="text" id="nome" placeholder="Ex: Poção de Fogo" required>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__label" for="preco">Preço (ouros)</label>
+                        <input class="campo__input" type="number" id="preco" placeholder="0" min="0" required>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__label" for="categoria">Categoria</label>
+                        <input class="campo__input" type="text" id="categoria" placeholder="Ex: Poções, Arma..." required>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__label" for="quantidade">Quantidade</label>
+                        <input class="campo__input" type="number" id="quantidade" placeholder="1" min="1" required>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__label" for="imagem">Imagem do Item</label>
+                        <input class="campo__input campo__input--file" type="file" id="imagem" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn--comprar">🛒 Comprar Item</button>
+
+                </form>
+            </div>
+
+        </aside>
+    </main>
+
+    <footer class="rodape">
+        <p>⚔ Vila de Valirian &nbsp;·&nbsp; Sistema Arcano v1.0 &nbsp;·&nbsp; SENAI Ribeirão Preto ⚔</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
