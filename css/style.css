@@ -59,6 +59,7 @@ body {
     line-height: 1.6;
 }
 
+
 /* ── Painel Dimensões ───────────────────────────────────────── */
 #painelDimensoes {
     background: var(--bg-escuro);
@@ -492,6 +493,13 @@ body {
     border-color: #7a4ac0;
     box-shadow: 0 0 14px rgba(100,50,180,0.4);
     color: #e0c8f8;
+}
+
+/* Coloque isso no final do seu arquivo style.css */
+.btn--magico.ativo {
+    background: linear-gradient(135deg, #00ff40, #517251);
+    color: rgb(255, 255, 255);
+    border-color: #00ff40;
 }
 
 /* Botão Filtro */

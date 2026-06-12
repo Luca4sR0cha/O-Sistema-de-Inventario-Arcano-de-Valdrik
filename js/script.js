@@ -10,12 +10,12 @@
 /* ── Requisito 1.1 / 1.2 / 1.3: Classe Item ─────────────────── */
 class Item {
     constructor(id, nome, preco, categoria, quantidade, imagem) {
-        this.id        = id;
-        this.nome      = nome;
-        this.preco     = preco;
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
         this.categoria = categoria;
         this.quantidade = quantidade;
-        this.imagem    = imagem;
+        this.imagem = imagem;
     }
 
     // Retorna o preço multiplicado pela quantidade atual
@@ -26,10 +26,10 @@ class Item {
 
 /* ── Requisito 1.4: Inventário Original (imutável como referência) ─ */
 const inventarioOriginal = [
-    new Item(1, "Espada de Aço Valiriano", 500,  "Arma",      1,  "espada sem fundo.png"),
-    new Item(2, "Escudo de Carvalho",      180,  "Armadura",  4,  "escudo sem fundo.png"),
-    new Item(3, "Poção de Cura Maior",      50,  "Poções",   10,  "cura sem fundo.png"),
-    new Item(4, "Elixir de Mana Azul",      75,  "Poções",    2,  "elixir azul sem fundo.png"),
+    new Item(1, "Espada de Aço Valiriano", 500, "Arma", 1, "espada sem fundo.png"),
+    new Item(2, "Escudo de Carvalho", 180, "Armadura", 4, "escudo sem fundo.png"),
+    new Item(3, "Poção de Cura Maior", 50, "Poções", 10, "cura sem fundo.png"),
+    new Item(4, "Elixir de Mana Azul", 75, "Poções", 2, "elixir azul sem fundo.png"),
 ];
 
 // Cópia de trabalho — recebe os novos itens e descontos
@@ -42,14 +42,14 @@ let proximoId = inventarioOriginal.length + 1;
 let larguraAtual = window.innerWidth;
 
 /* ── Seletores DOM ───────────────────────────────────────────── */
-const painel          = document.getElementById("painel");
-const container       = document.getElementById("exibirInventario");
-const form            = document.getElementById("formItem");
-const btnDesconto     = document.getElementById("btnDesconto");
+const painel = document.getElementById("painel");
+const container = document.getElementById("exibirInventario");
+const form = document.getElementById("formItem");
+const btnDesconto = document.getElementById("btnDesconto");
 const btnFiltroPocoes = document.getElementById("btnFiltroPocoes");
 const btnMostrarTodos = document.getElementById("btnMostrarTodos");
-const btnContarOuro   = document.getElementById("btnContarOuro");
-const resultadoOuro   = document.getElementById("resultadoOuro");
+const btnContarOuro = document.getElementById("btnContarOuro");
+const resultadoOuro = document.getElementById("resultadoOuro");
 
 /* ── Requisito 2.3: Sensor de Janela (onresize) ──────────────── */
 function atualizarPainel() {
@@ -126,12 +126,12 @@ form.addEventListener("submit", (evento) => {
     // Bloqueia o comportamento padrão de recarregar a página
     evento.preventDefault();
 
-    const nomeInput      = document.getElementById("nome").value.trim();
+    const nomeInput = document.getElementById("nome").value.trim();
     // Sanitização e Tipagem com Number() — Requisito 2.2
-    const precoInput     = Number(document.getElementById("preco").value);
+    const precoInput = Number(document.getElementById("preco").value);
     const categoriaInput = document.getElementById("categoria").value.trim();
-    const qtdInput       = Number(document.getElementById("quantidade").value);
-    const imagemInput    = document.getElementById("imagem").files[0] || null;
+    const qtdInput = Number(document.getElementById("quantidade").value);
+    const imagemInput = document.getElementById("imagem").files[0] || null;
 
     // Cria novo item a partir da classe Item
     const novoItem = new Item(
@@ -153,26 +153,53 @@ form.addEventListener("submit", (evento) => {
     resultadoOuro.classList.remove("erro");
 });
 
+let descontoAplicado = false;
+
 /* ── Requisito 3.2: Pechincha Arcana (.map()) ────────────────── */
-btnDesconto.addEventListener("click", () => {
-    // .map() cria um NOVO array sem corromper o original
-    const inventarioComDesconto = mochilaExibicao.map((item) => {
-        return new Item(
-            item.id,
-            item.nome,
-            item.preco * 0.9,   // reduz 10%
-            item.categoria,
-            item.quantidade,
-            item.imagem
-        );
-    });
+    btnDesconto.addEventListener("click", () => {
+    if (descontoAplicado === false) {
+        const inventarioComDesconto = mochilaExibicao.map((item) => {
+            return new Item(
+                item.id,
+                item.nome,
+                item.preco * 0.9,
+                item.categoria,
+                item.quantidade,
+                item.imagem
+            );
+        });
+        descontoAplicado = true;
+        mochilaExibicao = inventarioComDesconto;
+        desenharMochilaNaTela(mochilaExibicao);
 
-    // Substitui a exibição atual pelo array com desconto
-    mochilaExibicao = inventarioComDesconto;
-    desenharMochilaNaTela(mochilaExibicao);
+        resultadoOuro.textContent = "— moedas —";
+        resultadoOuro.classList.remove("erro");
 
-    resultadoOuro.textContent = "— moedas —";
-    resultadoOuro.classList.remove("erro");
+        // Liga a classe com o visual verde e gordo
+        btnDesconto.classList.add("ativo");
+    } 
+    else {
+        const inventarioComDesconto = mochilaExibicao.map((item) => {
+            return new Item(
+                item.id,
+                item.nome,
+                item.preco / 0.9,
+                item.categoria,
+                item.quantidade,
+                item.imagem
+            );
+        });
+        mochilaExibicao = inventarioComDesconto;
+        desenharMochilaNaTela(mochilaExibicao);
+
+        resultadoOuro.textContent = "— moedas —";
+        resultadoOuro.classList.remove("erro");
+
+        descontoAplicado = false;
+
+        // Desliga a classe, voltando automaticamente para o roxo medieval original
+        btnDesconto.classList.remove("ativo");
+    }
 });
 
 /* ── Requisito 3.3: Visão Alquímica (.filter()) ──────────────── */
@@ -185,14 +212,14 @@ btnFiltroPocoes.addEventListener("click", () => {
     desenharMochilaNaTela(apenasPocoes);
 
     // Alterna visibilidade dos botões de filtro
-    btnFiltroPocoes.style.display  = "none";
-    btnMostrarTodos.style.display  = "inline-flex";
+    btnFiltroPocoes.style.display = "none";
+    btnMostrarTodos.style.display = "inline-flex";
 });
 
 btnMostrarTodos.addEventListener("click", () => {
     desenharMochilaNaTela(mochilaExibicao);
-    btnFiltroPocoes.style.display  = "inline-flex";
-    btnMostrarTodos.style.display  = "none";
+    btnFiltroPocoes.style.display = "inline-flex";
+    btnMostrarTodos.style.display = "none";
 });
 
 /* ── Requisito 4.3 / 4.4: Contar Ouro (for clássico + &&) ────── */
@@ -209,7 +236,7 @@ btnContarOuro.addEventListener("click", () => {
             totalOuro += mochilaExibicao[i].calcularSubtotal();
         }
 
-        resultadoOuro.textContent = `${totalOuro.toLocaleString("pt-BR", {minimumFractionDigits: 2})} ouros`;
+        resultadoOuro.textContent = `${totalOuro.toLocaleString("pt-BR", { minimumFractionDigits: 2 })} ouros`;
         resultadoOuro.classList.remove("erro");
 
     } else if (larguraAtual <= 480) {
